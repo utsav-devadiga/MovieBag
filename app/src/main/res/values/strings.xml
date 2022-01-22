@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">MovieBag</string>
+    <string name="movie_poster">Movie Poster</string>
+    <string name="language">Language :</string>
+    <string name="home">Home</string>
+    <string name="trending">Trending</string>
+    <string name="release_date">Release Date :</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="production_house">Production House</string>
+    <string name="cast">Cast</string>
+    <string name="review">Review</string>
+    <string name="similar_movies">Similar Movies</string>
+    <string name="favourites">Favourites</string>
+    <string name="casters">Casters</string>
+    <string name="no_data">No Data</string>
+    <string name="reviews">Reviews</string>
+</resources>
