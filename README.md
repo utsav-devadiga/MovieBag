@@ -15,7 +15,7 @@ Movie Bag is a MVVM app developed as an assignment for [Greedy Games](https://gr
 ## API_KEY
 
 To use this app as project you will need a api key which can you get from the api site itself or you can click [here](https://www.themoviedb.org/)
-and then add the api to the file with String of [`API_KEY`](https://github.com/utsav-devadiga/MovieBag/blob/master/app/src/main/java/com/project/moviebag/utils/Credentials.java)  
+and then add the api key to the file with String of [`API_KEY`](https://github.com/utsav-devadiga/MovieBag/blob/master/app/src/main/java/com/project/moviebag/utils/Credentials.java)  
 
 ## Features
 
