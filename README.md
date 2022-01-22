@@ -7,10 +7,10 @@ Movie Bag is a MVVM app developed as an assignment for [Greedy Games](https://gr
    <br> 
 ## About
 
-You can read about MVVM [here](https://developer.android.com/topic/architecture)<br>
-This app uses [Retrofit](https://github.com/square/retrofit) Library
-Also uses [Lottie](https://lottiefiles.com/) ainmations and
-The api is from [TMDB](https://www.themoviedb.org/)
+- You can read about MVVM [here](https://developer.android.com/topic/architecture)<br>
+- This app uses [Retrofit](https://github.com/square/retrofit) Library
+- Also uses [Lottie](https://lottiefiles.com/) ainmations and
+- The api is from [TMDB](https://www.themoviedb.org/)
 
 ## API_KEY
 
@@ -25,6 +25,8 @@ The android app lets you:
 - See the Prodction Companies ad also shows the similar movie selected from details page
 
 ## Screenshots
+
+- You can download the app from [here](https://github.com/utsav-devadiga/MovieBag/releases/download/1.1/Movie-Bag.apk)
 
 [<img src="https://github.com/utsav-devadiga/MovieBag/blob/master/HomePage.png" align="center"
 width="200"
