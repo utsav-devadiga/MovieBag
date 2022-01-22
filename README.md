@@ -21,8 +21,8 @@ and then add the api key to the file with String of [`API_KEY`](https://github.c
 
 The android app lets you:
 - Read the info of the latest, trending movies.
-- Read the cast and the synopsis of the movie.
-- See the Prodction Companies ad also shows the similar movie selected from details page
+- Read the cast and the synopsis of the movies.
+- See the Prodction Companies and also shows the similar movie selected from details page
 
 ## Screenshots
 
