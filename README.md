@@ -59,6 +59,3 @@ wallabag app is a free and open source project developed by volunteers. Any cont
 - Convert to Kotlin
 - Adding room databases (for favourites)
 
-
-## 😃
-I hope i get into Greedy games :) </strong>
