@@ -53,7 +53,7 @@ wallabag app is a free and open source project developed by volunteers. Any cont
 
 ## TODO
 - Animations -micro ainmations
-- Aimations - while transitioning pages (shared elemet transition)
+- Aimations - while transitioning pages (shared element transition)
 - More Clean architecture
 - Navigation Component
 - Convert to Kotlin
