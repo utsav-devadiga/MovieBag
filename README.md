@@ -48,7 +48,7 @@ On Android versions prior to Android 6.0, Movie-Bag requires the following permi
 
 ## Contributing
 
-wallabag app is a free and open source project developed by volunteers. Any contributions are welcome. Here are a few ways you can help:
+Movie-Bag app is a free and open source project developed by volunteers. Any contributions are welcome. Here are a few ways you can help:
  * [Report bugs and make suggestions.](https://github.com/utsav-devadiga/MovieBag/issues)
 
 ## TODO
