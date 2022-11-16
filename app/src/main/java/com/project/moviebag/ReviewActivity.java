@@ -28,6 +28,8 @@ public class ReviewActivity extends AppCompatActivity {
     MovieModel movieModel;
     LinearLayout No_data;
     ImageView back_icon;
+    boolean MANUAL_RESET = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,8 @@ public class ReviewActivity extends AppCompatActivity {
         getDataFromIntent();
 
         back_icon.setOnClickListener(view -> {
+            MANUAL_RESET = true;
+            movieListViewModel.resetReview();
             finish();
         });
     }
@@ -70,25 +74,27 @@ public class ReviewActivity extends AppCompatActivity {
         movieListViewModel.getReviews().observe(this, new Observer<List<Review>>() {
             @Override
             public void onChanged(List<Review> reviews) {
-
-                if (reviews == null) {
-                    No_data.setVisibility(View.VISIBLE);
-                    reviewCycle.setVisibility(View.GONE);
-                    return;
-                }
-                if (reviews.size() == 0) {
-                    No_data.setVisibility(View.VISIBLE);
-                    reviewCycle.setVisibility(View.GONE);
-                    return;
-                }
-                if (reviews != null) {
-                    for (Review review : reviews) {
-
-                        reviewAdapter.setReviewList(reviews);
+                if (!MANUAL_RESET) {
+                    if (reviews == null) {
+                        No_data.setVisibility(View.VISIBLE);
+                        reviewCycle.setVisibility(View.GONE);
+                        return;
                     }
-                    reviewCycle.setVisibility(View.VISIBLE);
-                    No_data.setVisibility(View.GONE);
+                    if (reviews.size() == 0) {
+                        No_data.setVisibility(View.VISIBLE);
+                        reviewCycle.setVisibility(View.GONE);
+                        return;
+                    }
+                    if (reviews != null) {
+                        for (Review review : reviews) {
+
+                            reviewAdapter.setReviewList(reviews);
+                        }
+                        reviewCycle.setVisibility(View.VISIBLE);
+                        No_data.setVisibility(View.GONE);
+                    }
                 }
+
             }
         });
 

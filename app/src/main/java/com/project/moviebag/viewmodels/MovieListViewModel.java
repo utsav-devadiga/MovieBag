@@ -45,14 +45,14 @@ public class MovieListViewModel extends ViewModel {
     public LiveData<List<Cast>> getCasts() {
         return movieRepository.getCasts();
     }
-    public LiveData<List<Crew>>getDirector(){
+
+    public LiveData<List<Crew>> getDirector() {
         return movieRepository.getDirector();
     }
 
     public LiveData<List<Review>> getReviews() {
         return movieRepository.getReviews();
     }
-
 
 
     //calling the trending in view-model
@@ -81,8 +81,8 @@ public class MovieListViewModel extends ViewModel {
     }
 
     //calling the reviews in view-model
-    public void searchMovieApiReview(int movie_id,int pageNumber){
-        movieRepository.searchReviews(movie_id,pageNumber);
+    public void searchMovieApiReview(int movie_id, int pageNumber) {
+        movieRepository.searchReviews(movie_id, pageNumber);
     }
 
     //pagination Support
@@ -93,8 +93,28 @@ public class MovieListViewModel extends ViewModel {
     public void searchNextPageSimilar() {
         movieRepository.searchNextPageSimilar();
     }
+
     public void searchNextPageReviews() {
         movieRepository.searchNextPageReviews();
+    }
+
+    //Clean the cast
+    public void resetCast() {
+        movieRepository.resetCast();
+    }
+
+    //Clean the review
+    public void resetReview() {
+        movieRepository.resetReview();
+    }
+
+
+    public LiveData<Boolean> getCastLoading() {
+        return movieRepository.getCastLoading();
+    }
+
+    public LiveData<Boolean> getLoading() {
+        return movieRepository.getLoading();
     }
 
 }

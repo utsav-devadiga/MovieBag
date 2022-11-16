@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
@@ -43,6 +44,7 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
     ViewPager2 nowPlayingViewPager;
     private NowPlayingAdapter now_playing_adapter;
     TabLayout viewPagerIndicator;
+    RelativeLayout loadingLayout;
 
     //View Model
     private MovieListViewModel movieListViewModel;
@@ -56,6 +58,7 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
         moviesCycle = findViewById(R.id.movies_recyclerView);
         nowPlayingViewPager = findViewById(R.id.movies_viewPager);
         viewPagerIndicator = findViewById(R.id.view_pager_indicator);
+        loadingLayout  = findViewById(R.id.loading);
 
         //view-model
         movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
@@ -72,6 +75,14 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
         searchMovieApi("", 1);
         searchMovieApiNowPlaying(1);
 
+
+        movieListViewModel.getLoading().observe(this, loading -> {
+            if (loading) {
+                loadingLayout.setVisibility(View.VISIBLE);
+            } else {
+                loadingLayout.setVisibility(View.GONE);
+            }
+        });
 
     }
 

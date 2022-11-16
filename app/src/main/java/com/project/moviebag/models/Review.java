@@ -102,4 +102,17 @@ public class Review implements Parcelable {
         parcel.writeString(updatedAt);
         parcel.writeString(url);
     }
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "author='" + author + '\'' +
+                ", authorDetails=" + authorDetails +
+                ", content='" + content + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", id='" + id + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

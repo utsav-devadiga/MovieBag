@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.project.moviebag.adapters.CastAdapters;
@@ -26,6 +28,7 @@ public class CastActivity extends AppCompatActivity {
     CastAdapters castAdapter;
     MovieListViewModel movieListViewModel;
     ImageView back_icon;
+    RelativeLayout loadingLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class CastActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cast);
         castCycle = findViewById(R.id.cast_recyclerview);
         back_icon = findViewById(R.id.back_icon_cast);
+        loadingLayout = findViewById(R.id.loading);
 
         movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
 
@@ -46,7 +50,16 @@ public class CastActivity extends AppCompatActivity {
         observeChangesCast();
 
         back_icon.setOnClickListener(view -> {
+            movieListViewModel.resetCast();
             finish();
+        });
+
+        movieListViewModel.getCastLoading().observe(this, loading -> {
+            if (loading) {
+                loadingLayout.setVisibility(View.VISIBLE);
+            } else {
+                loadingLayout.setVisibility(View.GONE);
+            }
         });
 
     }
@@ -77,7 +90,7 @@ public class CastActivity extends AppCompatActivity {
                 if (crews != null) {
                     for (Crew crew : crews) {
                         if (crew.getJob().equals("Director")) {
-                           //can add directors on the list
+                            //can add directors on the list
                         }
                     }
                 }

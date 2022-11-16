@@ -42,4 +42,15 @@ public class ReviewResponse {
     public Integer getTotalResults() {
         return totalResults;
     }
+
+    @Override
+    public String toString() {
+        return "ReviewResponse{" +
+                "id=" + id +
+                ", page=" + page +
+                ", results=" + results +
+                ", totalPages=" + totalPages +
+                ", totalResults=" + totalResults +
+                '}';
+    }
 }

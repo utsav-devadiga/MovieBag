@@ -81,4 +81,14 @@ public class Author implements Parcelable {
             parcel.writeDouble(rating);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", avatarPath='" + avatarPath + '\'' +
+                ", rating=" + rating +
+                '}';
+    }
 }

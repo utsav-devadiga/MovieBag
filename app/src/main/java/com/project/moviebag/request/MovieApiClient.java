@@ -35,6 +35,14 @@ public class MovieApiClient {
     private MutableLiveData<List<Review>> mReviewList;
     private MutableLiveData<List<Crew>> mCrewList;
 
+    public MutableLiveData<Boolean> movieLoading;
+    public MutableLiveData<Boolean> reviewLoading;
+    public MutableLiveData<Boolean> castLoading;
+    public MutableLiveData<Boolean> singleMovieLoading;
+    public  MutableLiveData<Boolean> nowPlayingLoading;
+    public MutableLiveData<Boolean> similarMovieLoading;
+
+
     private static MovieApiClient instance;
 
     //making Global Runnable
@@ -61,6 +69,13 @@ public class MovieApiClient {
         mCastList = new MutableLiveData<>();
         mReviewList = new MutableLiveData<>();
         mCrewList = new MutableLiveData<>();
+
+        movieLoading = new MutableLiveData<>(true);
+        reviewLoading = new MutableLiveData<>(true);
+        castLoading = new MutableLiveData<>(true);
+        singleMovieLoading = new MutableLiveData<>(true);
+        nowPlayingLoading = new MutableLiveData<>(true);
+        similarMovieLoading = new MutableLiveData<>(true);
 
     }
 
@@ -215,6 +230,7 @@ public class MovieApiClient {
 
             this.movieId = movieId;
             cancelRequest = false;
+            singleMovieLoading.postValue(true);
         }
 
         @Override
@@ -222,19 +238,24 @@ public class MovieApiClient {
             //Getting the response
             {
                 try {
+                    singleMovieLoading.postValue(true);
                     Response response = getMovie(movieId).execute();
                     if (cancelRequest) {
+                        singleMovieLoading.postValue(false);
                         return;
                     }
                     if (response.code() == 200) {
+                        singleMovieLoading.postValue(false);
                         Movie model = (Movie) response.body();
                         mSingleMovieModel.postValue(model);
                     } else {
+                        singleMovieLoading.postValue(false);
                         String error = response.errorBody().string();
                         Log.v("TAG", "Error " + error);
                         mSingleMovieModel.postValue(null);
                     }
                 } catch (IOException e) {
+                    singleMovieLoading.postValue(false);
                     e.printStackTrace();
                 }
             }
@@ -261,7 +282,7 @@ public class MovieApiClient {
         boolean cancelRequest;
 
         public RetrieveMoviesNowPlayingRunnable(int pageNumber) {
-
+            nowPlayingLoading.postValue(true);
             this.pageNumber = pageNumber;
             cancelRequest = false;
         }
@@ -271,11 +292,14 @@ public class MovieApiClient {
             //Getting the response
             {
                 try {
+                    nowPlayingLoading.postValue(true);
                     Response response = getMovies(pageNumber).execute();
                     if (cancelRequest) {
+                        nowPlayingLoading.postValue(false);
                         return;
                     }
                     if (response.code() == 200) {
+                        nowPlayingLoading.postValue(false);
                         List<MovieModel> list = new ArrayList<>(((MovieSearchResponse) response.body()).getMovies());
                         if (pageNumber == 1) {
                             //sending to live data
@@ -283,17 +307,20 @@ public class MovieApiClient {
                             //set value is for background
                             mMoviesNowPlaying.postValue(list);
                         } else {
+                            nowPlayingLoading.postValue(false);
                             List<MovieModel> currentMovies = mMoviesNowPlaying.getValue();
                             currentMovies.addAll(list);
                             mMoviesNowPlaying.postValue(currentMovies);
 
                         }
                     } else {
+                        nowPlayingLoading.postValue(false);
                         String error = response.errorBody().string();
                         Log.v("TAG", "Error " + error);
                         mMoviesNowPlaying.postValue(null);
                     }
                 } catch (IOException e) {
+                    nowPlayingLoading.postValue(false);
                     e.printStackTrace();
                 }
             }
@@ -322,6 +349,7 @@ public class MovieApiClient {
         boolean cancelRequest;
 
         public RetrieveMoviesRunnable(String query, int pageNumber) {
+            movieLoading.postValue(true);
             this.query = query;
             this.pageNumber = pageNumber;
             cancelRequest = false;
@@ -332,11 +360,13 @@ public class MovieApiClient {
             //Getting the response
             {
                 try {
+                    movieLoading.postValue(true);
                     Response response = getMovies(query, pageNumber).execute();
                     if (cancelRequest) {
                         return;
                     }
                     if (response.code() == 200) {
+                        movieLoading.postValue(false);
                         List<MovieModel> list = new ArrayList<>(((MovieSearchResponse) response.body()).getMovies());
                         if (pageNumber == 1) {
                             //sending to live data
@@ -350,11 +380,13 @@ public class MovieApiClient {
 
                         }
                     } else {
+                        movieLoading.postValue(false);
                         String error = response.errorBody().string();
                         Log.v("TAG", "Error " + error);
                         mMovies.postValue(null);
                     }
                 } catch (IOException e) {
+                    movieLoading.postValue(false);
                     e.printStackTrace();
                 }
             }
@@ -383,6 +415,7 @@ public class MovieApiClient {
         boolean cancelRequest;
 
         public RetrieveSimilarMovies(int movieId, int pageNumber) {
+            similarMovieLoading.postValue(true);
             this.movieId = movieId;
             this.pageNumber = pageNumber;
             cancelRequest = false;
@@ -391,8 +424,10 @@ public class MovieApiClient {
         @Override
         public void run() {
             try {
+                similarMovieLoading.postValue(true);
                 Response response = getSimilarMovies(movieId, pageNumber).execute();
                 if (response.code() == 200) {
+                    similarMovieLoading.postValue(false);
                     List<MovieModel> list = new ArrayList<>(((MovieSearchResponse) response.body()).getMovies());
                     if (pageNumber == 1) {
                         //sending to live data
@@ -400,6 +435,7 @@ public class MovieApiClient {
                         //set value is for background
                         mSimilarMovieList.postValue(list);
                     } else {
+                        similarMovieLoading.postValue(false);
                         List<MovieModel> currentMovies = mSimilarMovieList.getValue();
                         currentMovies.addAll(list);
                         mSimilarMovieList.postValue(currentMovies);
@@ -407,6 +443,7 @@ public class MovieApiClient {
                 }
 
             } catch (IOException e) {
+                similarMovieLoading.postValue(false);
                 e.printStackTrace();
             }
 
@@ -432,6 +469,7 @@ public class MovieApiClient {
         boolean cancelRequest;
 
         public RetrieveCast(int movie_id) {
+            castLoading.postValue(true);
             this.movie_id = movie_id;
             cancelRequest = false;
         }
@@ -440,15 +478,24 @@ public class MovieApiClient {
         @Override
         public void run() {
             try {
+                castLoading.postValue(true);
                 Response response = getCasts(movie_id).execute();
                 if (response.code() == 200) {
+                    castLoading.postValue(false);
                     List<Cast> list = new ArrayList<>(((CastResponse) response.body()).getCast());
                     //getting the director alone
                     List<Crew> director = new ArrayList<>(((CastResponse) response.body()).getCrew());
                     mCastList.postValue(list);
                     mCrewList.postValue(director);
+                } else {
+                    mCastList.postValue(null);
+                    mCrewList.postValue(null);
+                    castLoading.postValue(false);
                 }
             } catch (IOException e) {
+                castLoading.postValue(false);
+                mCastList.postValue(null);
+                mCrewList.postValue(null);
                 e.printStackTrace();
             }
 
@@ -474,6 +521,7 @@ public class MovieApiClient {
         boolean cancelRequest;
 
         public RetrieveReview(int movie_id, int pageNumber) {
+            reviewLoading.postValue(true);
             this.movie_id = movie_id;
             this.pageNumber = pageNumber;
             cancelRequest = false;
@@ -484,11 +532,14 @@ public class MovieApiClient {
             //Getting the response
             {
                 try {
+                    reviewLoading.postValue(true);
                     Response response = getReviews(movie_id, pageNumber).execute();
                     if (cancelRequest) {
                         return;
                     }
                     if (response.code() == 200) {
+                        Log.d("REVIEWS", "run: " + response.body().toString());
+                        reviewLoading.postValue(false);
                         List<Review> list = new ArrayList<>(((ReviewResponse) response.body()).getResults());
                         if (pageNumber == 1) {
                             if (list.size() == 0) {
@@ -499,17 +550,18 @@ public class MovieApiClient {
                             //set value is for background
                             mReviewList.postValue(list);
                         } else {
-                            List<Review> currentMovies = mReviewList.getValue();
-                            currentMovies.addAll(list);
-                            mReviewList.postValue(currentMovies);
+                            reviewLoading.postValue(false);
+                            mReviewList.postValue(null);
 
                         }
                     } else {
+                        reviewLoading.postValue(false);
                         String error = response.errorBody().string();
                         Log.v("TAG", "Error " + error);
                         mReviewList.postValue(null);
                     }
                 } catch (IOException e) {
+                    reviewLoading.postValue(false);
                     e.printStackTrace();
                 }
             }
@@ -530,6 +582,16 @@ public class MovieApiClient {
             cancelRequest = true;
         }
 
+    }
+
+
+    public void resetCast() {
+        mCastList.postValue(null);
+        mCrewList.postValue(null);
+    }
+
+    public void resetReview() {
+        mReviewList.postValue(null);
     }
 
 

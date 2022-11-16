@@ -54,9 +54,11 @@ public class MovieRepository {
     public LiveData<List<Cast>> getCasts() {
         return movieApiClient.getCastList();
     }
+
     public LiveData<List<Crew>> getDirector() {
         return movieApiClient.getCrewList();
     }
+
     public LiveData<List<Review>> getReviews() {
         return movieApiClient.getReviewList();
     }
@@ -111,5 +113,23 @@ public class MovieRepository {
         searchReviews(mMovieId, mPageNumber + 1);
     }
 
+    //Clean the cast
+    public void resetCast() {
+        movieApiClient.resetCast();
+    }
+
+    //Clean the review
+    public void resetReview() {
+        movieApiClient.resetReview();
+    }
+
+
+    public LiveData<Boolean> getCastLoading() {
+        return movieApiClient.castLoading;
+    }
+
+    public  LiveData<Boolean> getLoading(){
+        return movieApiClient.movieLoading;
+    }
 
 }
